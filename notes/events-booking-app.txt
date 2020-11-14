@@ -1,0 +1,132 @@
+Events Booking App (Full Stack)
+-------------------------------
+Concepts Covered :
+------------------
+Angular Databinding
+Form Handling
+Routing
+Services
+Http Modules
+JWT Authentication
+
+Technologies Used
+------------------
+Angular + Bootstrap
+Express + Node  JS
+Mongo DB 
+
+Pages In App
+------------
+free events
+pro events
+upload events
+login
+register
+
+---------------------
+Express Server Setup
+---------------------
+node modules -> express , mongodb , body-parser , cors
+-------------
+
+DB Information
+---------------
+database -> events-booking
+tables -> events , proevents , users
+
+
+
+Backend API Info
+-----------------
+
+GET All Free Events
+-------------------
+URL : http://127.0.0.1:3000/api/events
+Method : GET
+Router Function : router.get();
+Fields : no-fields
+Mongo DB Function : db.find();
+Table : events
+
+
+GET All PRO Events
+-------------------
+URL : http://127.0.0.1:3000/api/pro-events
+Method : GET
+Router Function : router.get();
+Fields : no-fields
+Mongo DB Function : db.find();
+Table : proevents
+
+Upload Events
+-------------------
+URL : http://127.0.0.1:3000/api/upload
+Method : POSt
+Router Function : router.post();
+Fields : name , url , date , type:(FREE/PRO) 
+Mongo DB Function : db.insertOne();
+Table : proevents / events 
+
+Login a User
+-------------------
+URL : http://127.0.0.1:3000/api/login
+Method : POST
+Router Function : router.post();
+Fields : email , password
+Mongo DB Function : db.findOne({email : user.email});
+Table : users 
+
+Register a User
+-------------------
+URL : http://127.0.0.1:3000/api/register
+Method : POST
+Router Function : router.post();
+Fields : username , email , password
+Mongo DB Function : db.insertOne({user});
+Table : users 
+
+--------------------------------------------
+Front End (Angular)
+--------------------------------------------
+components 
+-----------
+free-events
+pro-events
+upload-events
+user-login
+user-register
+
+Services -> userService , EventsService
+------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

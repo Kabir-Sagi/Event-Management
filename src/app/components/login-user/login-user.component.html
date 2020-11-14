@@ -1,0 +1,41 @@
+<section class="p-3">
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-md-4 m-auto">
+        <div *ngIf="errorMsg" class="alert alert-danger animated zoomIn">
+          <button class="close" data-dismiss="alert" (click)="reloadComponent()">
+            <i class="fa fa-times-circle"></i>
+          </button>
+          <span>{{errorMsg?.msg | json}}</span>
+        </div>
+        <div *ngIf="emptyForm" class="alert alert-danger animated zoomIn">
+          <button class="close" data-dismiss="alert">
+            <i class="fa fa-times-circle"></i>
+          </button>
+          <span>Please fill in the fields</span>
+        </div>
+        <div class="card animated slideInLeft">
+          <div class="card-header bg-danger text-center text-white">
+            <h3>Login Here</h3>
+          </div>
+          <div class="card-body bg-light">
+            <form (ngSubmit)="submitLogin()">
+              <div class="form-group">
+                <input [(ngModel)]="user.email" name="email" type="email" class="form-control" placeholder="Your Email">
+              </div>
+              <div class="form-group">
+                <input [(ngModel)]="user.password" name="password" type="password" class="form-control" placeholder="Your Password">
+              </div>
+              <div>
+                <input type="submit" value="login" class="btn btn-danger">
+              </div>
+            </form>
+          </div>
+          <div class="card-footer text-center">
+            <img src="../../../assets/img/logo.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

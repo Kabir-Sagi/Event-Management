@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">
+      <img src="../../../assets/img/logo.png" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item px-2">
+          <a class="nav-link" routerLink="/events" routerLinkActive="active">Free Events</a>
+        </li>
+        <li class="nav-item px-2">
+          <a class="nav-link" routerLink="/pro-events" routerLinkActive="active">Pro Events</a>
+        </li>
+        <li class="nav-item px-2" *ngIf="_userService.isLoggedIn()">
+          <a class="nav-link" routerLink="/upload-events" routerLinkActive="active">Upload Events</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item px-2" *ngIf="!_userService.isLoggedIn()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">
+           <i class="fa fa-user-circle"></i> Login</a>
+        </li>
+        <li class="nav-item px-2" *ngIf="!_userService.isLoggedIn()">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">
+           <i class="fa fa-user-astronaut"></i> Register</a>
+        </li>
+        <li class="nav-item px-2" *ngIf="_userService.isLoggedIn()">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">
+            <i class="fa fa-user-alt"></i> Hi, {{_userService.getLoggedInUser()}}</a>
+        </li>
+        <li class="nav-item px-2" *ngIf="_userService.isLoggedIn()" (click)="logoutUser()">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">
+            <i class="fa fa-user-alt"></i> LogOut</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

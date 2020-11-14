@@ -1,0 +1,109 @@
+-------------------------------------------------------
+Steps for JWT Token Authentication
+-------------------------------------------------------
+1) npm install jsonwebtoken --save at server
+2) on login & register , generate the token and send to client
+	const jwt = require('jsonwebtoken');
+	// Create a new token
+	let payload = { subject : record.insertedId};
+	let token = jwt.sign(payload , 'ssshhh');
+	response.status(200).json({token});
+	
+3) store the token in local storage at client side
+	// store the token in the local storage
+	localStorage.setItem('token',response.token);	
+
+4) Implement the route gaurds for pro events
+   ng g guard pro-events
+   
+5) create a method in Events services  to check is logged in or not?
+
+public loggedIn():boolean{
+    if(localStorage.getItem('token')){
+      return true;
+    }
+    else{
+      return  false;
+    }
+  }
+
+6) implement canActivate method in authGaurd
+
+constructor(private _eventsService:EventsService ,
+              private _router:Router){};
+
+  canActivate(): boolean {
+    if(this._eventsService.loggedIn()){
+      return  true;
+    }
+    else{
+      this._router.navigate(['/login']);
+      return false;
+    }
+  }
+
+7) declare the auth gaurd in the providersa array of appModule.ts
+
+8) use the auth gaurd in routing module.
+  { path : 'pro-events' , component : ProEventsComponent , canActivate : [ ProEventsGuard ]},
+  
+9) Generate an Interceptors in angular
+   ng g interceptor <name>
+
+10) clone the request with token in the interceptor
+	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    let tokenizedRequest = request.clone({
+      setHeaders : {
+        'Authorization' : `Bearer ${this._eventsService.getToken()}`
+      }
+    });
+
+    return next.handle(tokenizedRequest);
+  }
+  
+11) Register the Interceptor in App Module
+	providers: [EventsService , ProEventsGuard , {
+		provide : HTTP_INTERCEPTORS,
+		useClass : EventsInterceptor,
+		multi : true
+	  }],
+
+12) Test the token sending to server in the network tab of browser console
+
+13) Create a middleware to verify the token in the express server
+	// JWT Token verification
+	let verifyToken = (request,response , next) => {
+	  if(!request.headers.authorization){
+		return response.status(401).send('Unauthorized Request');
+	  }
+	  let token = request.headers.authorization.split(' ')[1];
+	  if(token === null){
+		return response.status(401).send('Unauthorized Request');
+	  }
+	  let payload = jwt.verify(token,'ssshhh');
+	  if(!payload){
+		return response.status(401).send('Unauthorized Request');
+	  }
+	  request.userId = payload.subject;
+	  next();
+	};
+
+14) attach the middleware to pro-events
+	router.get('/pro-events', verifyToken , (request,response) => {
+	  let db = mongodb.getDB();
+	  db.collection('proevents').find().toArray((error , events) => {
+		if(error){
+		  console.error(error);
+		}
+		else{
+		  response.json(events);
+		}
+	  });
+	});
+
+15) modify the 'pro-events.ts' file for error handling and navigate to 'login' page if error found
+
+16) Implement the Logout Functionality
+--------------------------------------
+
+

@@ -1,0 +1,30 @@
+<section class="p-3">
+  <div class="container">
+    <div class="row">
+      <div class="col animated slideInLeft">
+        <h3>Total PRO Events :
+          <span class="text-primary font-weight-bold">{{proEvents?.length}}</span>
+        </h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col animated slideInUp delay-1s">
+        <div class="card my-3" *ngFor="let event of proEvents">
+          <img [src]="event.url" alt="">
+          <div class="card-body">
+            <div class="row">
+              <div class="col">
+                <h3 class="text-danger">{{event.name}}</h3>
+                <h5>Date : {{event.date}}</h5>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary">Book Now</button>
+                <img src="../../../assets/img/pro.jpg" width="200" height="100">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
